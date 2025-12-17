@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menú Productos</title>
+  <style>
+    :root {
+      --bg: #f8f9fb;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --accent: #111827;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(15, 23, 42, 0.06), transparent 35%),
+                  radial-gradient(circle at 80% 0%, rgba(17, 24, 39, 0.05), transparent 30%),
+                  var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow:
+        0 12px 40px rgba(15, 23, 42, 0.12),
+        0 2px 8px rgba(15, 23, 42, 0.05);
+      border: 1px solid rgba(15, 23, 42, 0.05);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0ea5e9, #111827);
+      display: inline-block;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .menu {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tile {
+      position: relative;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: var(--radius);
+      padding: 16px 16px 18px;
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.05), transparent);
+      color: inherit;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .tile:hover,
+    .tile:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.14);
+      border-color: rgba(14, 165, 233, 0.35);
+      outline: none;
+    }
+
+    .tile strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .tile span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .arrow {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: var(--accent);
+      transition: transform 160ms ease;
+    }
+
+    .tile:hover .arrow,
+    .tile:focus-visible .arrow {
+      transform: translate(4px, -50%);
+    }
+
+    @media (min-width: 640px) {
+      h1 { font-size: 32px; }
+      .tile strong { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <div class="eyebrow">Panel</div>
+      <h1>Gestión de productos</h1>
+      <p>Elige una opción para continuar.</p>
+      <nav class="menu" aria-label="Menú principal">
+        <a class="tile" href="#nuevo">
+          <strong>Ingresar nuevo</strong>
+          <span>Agrega un producto al catálogo.</span>
+          <span aria-hidden="true" class="arrow">→</span>
+        </a>
+        <a class="tile" href="#ver">
+          <strong>Ver productos</strong>
+          <span>Explora los artículos existentes.</span>
+          <span aria-hidden="true" class="arrow">→</span>
+        </a>
+      </nav>
+    </div>
+  </main>
+</body>
+</html>
