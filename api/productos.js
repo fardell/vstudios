@@ -1,8 +1,25 @@
 ﻿import { sql } from '@vercel/postgres';
 
 export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    try {
+      const { rows } = await sql`
+        select
+          nombre, precio, cantidad, categoria, subcategoria,
+          fecha_elaboracion, fecha_vencimiento, empaque, presentacion,
+          ingredientes, canton, provincia
+        from productos
+        order by nombre asc;
+      `;
+      return res.status(200).json({ rows });
+    } catch (error) {
+      console.error('Error consultando productos', error);
+      return res.status(500).json({ error: 'No se pudo obtener la lista de productos' });
+    }
+  }
+
   if (req.method !== 'POST') {
-    res.setHeader('Allow', 'POST');
+    res.setHeader('Allow', 'POST, GET');
     return res.status(405).json({ error: 'Metodo no permitido' });
   }
 

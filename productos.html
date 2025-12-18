@@ -39,6 +39,8 @@
         <button class="button secondary" type="submit">Aplicar filtro</button>
       </form>
 
+      <div class="status" id="listStatus" role="status" aria-live="polite"></div>
+
       <div class="table-wrapper">
         <table class="table" aria-label="Tabla de productos">
           <thead>
@@ -57,49 +59,8 @@
               <th>Provincia</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Mermelada artesanal</td>
-              <td>$5.50</td>
-              <td>24</td>
-              <td>Alimentos</td>
-              <td>Conservas</td>
-              <td>2024-06-01</td>
-              <td>2025-06-01</td>
-              <td>Frasco de vidrio</td>
-              <td>350 g</td>
-              <td>Fruta, azucar organica</td>
-              <td>Cuenca</td>
-              <td>Azuay</td>
-            </tr>
-            <tr>
-              <td>Jugo natural</td>
-              <td>$2.00</td>
-              <td>48</td>
-              <td>Bebidas</td>
-              <td>Jugos</td>
-              <td>2024-05-20</td>
-              <td>2024-08-20</td>
-              <td>Botella PET</td>
-              <td>500 ml</td>
-              <td>Naranja, agua purificada</td>
-              <td>Quito</td>
-              <td>Pichincha</td>
-            </tr>
-            <tr>
-              <td>Queso maduro</td>
-              <td>$7.90</td>
-              <td>12</td>
-              <td>Lacteos</td>
-              <td>Quesos</td>
-              <td>2024-05-10</td>
-              <td>2024-09-10</td>
-              <td>Vacio</td>
-              <td>400 g</td>
-              <td>Leche, sal, cultivo</td>
-              <td>Loja</td>
-              <td>Loja</td>
-            </tr>
+          <tbody id="productosBody">
+            <tr><td colspan="12">Cargando productos...</td></tr>
           </tbody>
         </table>
       </div>
@@ -109,5 +70,86 @@
       </div>
     </div>
   </main>
+
+  <script>
+    const body = document.getElementById('productosBody');
+    const listStatus = document.getElementById('listStatus');
+    const filtersForm = document.querySelector('.filters');
+    const columns = ['nombre','precio','cantidad','categoria','subcategoria','elaboracion','vencimiento','empaque','presentacion','ingredientes','canton','provincia'];
+    let cache = [];
+
+    const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[char]));
+
+    const formatPrice = (value) => {
+      const num = Number(value);
+      return Number.isFinite(num) ? `$${num.toFixed(2)}` : esc(value);
+    };
+
+    const render = (items) => {
+      body.innerHTML = '';
+      if (!items.length) {
+        body.innerHTML = '<tr><td colspan="12">No hay productos para mostrar.</td></tr>';
+        return;
+      }
+      const rows = items.map((item) => `
+        <tr>
+          <td>${esc(item.nombre)}</td>
+          <td>${formatPrice(item.precio)}</td>
+          <td>${esc(item.cantidad)}</td>
+          <td>${esc(item.categoria)}</td>
+          <td>${esc(item.subcategoria)}</td>
+          <td>${esc(item.fecha_elaboracion)}</td>
+          <td>${esc(item.fecha_vencimiento)}</td>
+          <td>${esc(item.empaque)}</td>
+          <td>${esc(item.presentacion)}</td>
+          <td>${esc(item.ingredientes)}</td>
+          <td>${esc(item.canton)}</td>
+          <td>${esc(item.provincia)}</td>
+        </tr>
+      `).join('');
+      body.innerHTML = rows;
+    };
+
+    const applyFilter = () => {
+      const campo = document.getElementById('campo').value;
+      const valor = document.getElementById('valor').value.trim().toLowerCase();
+      if (!valor) {
+        render(cache);
+        return;
+      }
+      if (campo) {
+        const filtered = cache.filter((item) => String(item[campo] ?? '').toLowerCase().includes(valor));
+        render(filtered);
+        return;
+      }
+      const filtered = cache.filter((item) => columns.some((col) => String(item[col] ?? '').toLowerCase().includes(valor)));
+      render(filtered);
+    };
+
+    filtersForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      applyFilter();
+    });
+
+    const loadProducts = async () => {
+      listStatus.textContent = 'Cargando productos...';
+      try {
+        const response = await fetch('/api/productos');
+        if (!response.ok) throw new Error('No se pudo obtener la lista');
+        const data = await response.json();
+        cache = Array.isArray(data.rows) ? data.rows : [];
+        render(cache);
+        listStatus.textContent = 'Productos cargados';
+      } catch (error) {
+        body.innerHTML = '<tr><td colspan="12">No se pudo cargar la lista de productos.</td></tr>';
+        listStatus.textContent = error.message;
+        listStatus.className = 'status error';
+      }
+    };
+
+    loadProducts();
+  </script>
 </body>
 </html>
