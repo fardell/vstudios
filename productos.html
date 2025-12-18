@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Listado de productos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wide">
+    <div class="card">
+      <div class="eyebrow">Panel</div>
+      <h1>Listado de productos</h1>
+      <p>Filtra y revisa todos los registros.</p>
+
+      <form class="filters" action="#" method="get">
+        <div class="field">
+          <label for="campo">Filtrar por</label>
+          <select id="campo" name="campo">
+            <option value="">Todos los campos</option>
+            <option value="nombre">Nombre</option>
+            <option value="precio">Precio</option>
+            <option value="cantidad">Cantidad</option>
+            <option value="categoria">Categoria</option>
+            <option value="subcategoria">Subcategoria</option>
+            <option value="elaboracion">Fecha de elaboracion</option>
+            <option value="vencimiento">Fecha de vencimiento</option>
+            <option value="empaque">Empaque</option>
+            <option value="presentacion">Presentacion</option>
+            <option value="ingredientes">Ingredientes</option>
+            <option value="canton">Canton de origen</option>
+            <option value="provincia">Provincia de origen</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="valor">Valor</label>
+          <input type="text" id="valor" name="valor" placeholder="Escribe tu filtro">
+        </div>
+        <button class="button secondary" type="submit">Aplicar filtro</button>
+      </form>
+
+      <div class="table-wrapper">
+        <table class="table" aria-label="Tabla de productos">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Precio</th>
+              <th>Cantidad</th>
+              <th>Categoria</th>
+              <th>Subcategoria</th>
+              <th>Fecha elaboracion</th>
+              <th>Fecha vencimiento</th>
+              <th>Empaque</th>
+              <th>Presentacion</th>
+              <th>Ingredientes</th>
+              <th>Canton</th>
+              <th>Provincia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mermelada artesanal</td>
+              <td>$5.50</td>
+              <td>24</td>
+              <td>Alimentos</td>
+              <td>Conservas</td>
+              <td>2024-06-01</td>
+              <td>2025-06-01</td>
+              <td>Frasco de vidrio</td>
+              <td>350 g</td>
+              <td>Fruta, azucar organica</td>
+              <td>Cuenca</td>
+              <td>Azuay</td>
+            </tr>
+            <tr>
+              <td>Jugo natural</td>
+              <td>$2.00</td>
+              <td>48</td>
+              <td>Bebidas</td>
+              <td>Jugos</td>
+              <td>2024-05-20</td>
+              <td>2024-08-20</td>
+              <td>Botella PET</td>
+              <td>500 ml</td>
+              <td>Naranja, agua purificada</td>
+              <td>Quito</td>
+              <td>Pichincha</td>
+            </tr>
+            <tr>
+              <td>Queso maduro</td>
+              <td>$7.90</td>
+              <td>12</td>
+              <td>Lacteos</td>
+              <td>Quesos</td>
+              <td>2024-05-10</td>
+              <td>2024-09-10</td>
+              <td>Vacio</td>
+              <td>400 g</td>
+              <td>Leche, sal, cultivo</td>
+              <td>Loja</td>
+              <td>Loja</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="actions">
+        <a class="button secondary" href="index.html">Volver</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
