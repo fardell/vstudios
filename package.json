@@ -8,7 +8,7 @@
     "deploy": "vercel --prod"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.9.0"
+     "@neondatabase/serverless": "^0.10.4"
   },
   "devDependencies": {
     "vercel": "^32.0.0"
