@@ -273,6 +273,20 @@ p {
   background: rgba(14, 165, 233, 0.08);
 }
 
+.status {
+  min-height: 18px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.status.success {
+  color: #0f766e;
+}
+
+.status.error {
+  color: #b91c1c;
+}
+
 @media (min-width: 640px) {
   h1 { font-size: 32px; }
   .tile strong { font-size: 18px; }

@@ -75,8 +75,47 @@
           <a class="button secondary" href="index.html">Volver</a>
           <button class="button" type="submit">Guardar producto</button>
         </div>
+        <div class="status" id="formStatus" role="status" aria-live="polite"></div>
       </form>
     </div>
   </main>
+  <script>
+    const form = document.querySelector('.form');
+    const status = document.getElementById('formStatus');
+    const submitBtn = form.querySelector('button[type="submit"]');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      status.textContent = 'Guardando producto...';
+      status.className = 'status';
+      submitBtn.disabled = true;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.precio = data.precio ? Number(data.precio) : null;
+      data.cantidad = data.cantidad ? Number(data.cantidad) : null;
+
+      try {
+        const response = await fetch('/api/productos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || 'No se pudo guardar el producto.');
+        }
+
+        status.textContent = 'Producto guardado correctamente.';
+        status.className = 'status success';
+        form.reset();
+      } catch (error) {
+        status.textContent = error.message;
+        status.className = 'status error';
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
