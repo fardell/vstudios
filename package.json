@@ -1,0 +1,19 @@
+{
+  "name": "sistema-gestion-productos",
+  "version": "1.0.0",
+  "description": "API y Frontend para la gestión de productos en Vercel Postgres",
+  "main": "api/productos.js",
+  "scripts": {
+    "start": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/postgres": "^0.9.0"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
